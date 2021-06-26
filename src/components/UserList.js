@@ -6,23 +6,22 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Typography from "@material-ui/core/Typography";
 
 class UserList extends Component {
+
     constructor(props) {
         super(props);
-        this.state = {
-            users: [{"id": 1, "name": "Johssssssn", "surname": "Doe", "age": 54, "email": "empty"},
-                {"id": 2, "name": "Johnтн", "surname": "Depp", "age": 58, "email": "super@email.com"}]
-        };
+        this.state={users:[]}
         this.removeUser = this.removeUser.bind(this);
     }
 
-//todo complete removeUser logic
     removeUser(id) {
-        let updatedUsers = [...this.state.users].filter(i => i.id !== id);
-        this.setState({users: updatedUsers});
+        this.props.removeUser(id);
+    }
+    editUser(user) {
+        this.props.editUser(user)
     }
 
     render() {
-        const {users} = this.state;
+        const users = this.props.users;
 
         const userList = users.map(user => {
             return <tr key={user.id}>
@@ -34,8 +33,8 @@ class UserList extends Component {
 
                 <td align={'center'}>
                     <ButtonGroup>
-                        //todo add logic for Edit button
-                        <Button size="small" variant="contained" color="primary" >Edit</Button>
+                        <Button size="small" variant="contained" color="primary"
+                                onClick={() => this.editUser(user)} >Edit</Button>
                         <Button size="small" variant="contained" color="secondary"
                                 onClick={() => this.removeUser(user.id)}>Delete</Button>
                     </ButtonGroup>
@@ -52,8 +51,8 @@ class UserList extends Component {
                             <thead>
                             <tr style={{backgroundColor: 'rgba(89,141,246,0.41)'}}>
                                 <th align={'center'} width="5%">ID</th>
-                                <th align={'center'} width="20%">First Name</th>
-                                <th align={'center'} width="20%">Last Name</th>
+                                <th align={'center'} width="20%">Name</th>
+                                <th align={'center'} width="20%">Surname</th>
                                 <th align={'center'} width="10%">Age</th>
                                 <th align={'center'} width="30%">Email</th>
                                 <th align={'center'} width="20%">Actions</th>
