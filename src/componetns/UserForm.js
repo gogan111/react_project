@@ -10,7 +10,7 @@ class UserForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            id: 0,
             email: '',
             age: '',
             name: '',
@@ -18,6 +18,13 @@ class UserForm extends React.Component {
             show: true
         };
         this.showFormAddUser = this.showFormAddUser.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleChangeAge = this.handleChangeAge.bind(this);
+        this.handleChangeName = this.handleChangeName.bind(this);
+        this.handleChangeSurname = this.handleChangeSurname.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearForm = this.clearForm.bind(this);
+
     }
 
     showFormAddUser() {
@@ -26,6 +33,7 @@ class UserForm extends React.Component {
         this.setState({
             show: !opened,
         })
+        alert("from userform " + this.state.show)
         this.props.showFormAddUser(!opened)
         //this.props.show.setValue(this.state.show)
     }
@@ -41,20 +49,15 @@ class UserForm extends React.Component {
             });
         }
         if (this.props.show !== prevProps.show) {
+
             this.setState({
                 show: this.props.show
             });
+
         }
     }
 
-    state = {
-        id: 0,
-        email: '',
-        age: '',
-        name: '',
-        surname: '',
-        show: true
-    }
+
 
     handleChangeEmail = (event) => {
         const email = event.target.value;
@@ -87,17 +90,19 @@ class UserForm extends React.Component {
             surname: '',
             age: '',
             email: '',
-            show: false
         });
+        this.props.showFormAddUser(false)
     }
 
     render() {
         return (
+
             <div>
                 <div >
+
                     <AppBar position="static">
-                        <Tabs  aria-label="simple tabs example">
-                            <Tab label="Add User" onClick={this.showFormAddUser}/>
+                        <Tabs value={1} aria-label="simple tabs example" >
+                            <Tab value={1} label="Add User" onClick={this.showFormAddUser}/>
 
                         </Tabs>
                     </AppBar>
