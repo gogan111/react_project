@@ -13,13 +13,15 @@ class MainPage extends Component {
                 "surname": '',
                 "age": '',
                 "email": ''
-            }
+            },
+            show: false
         };
 
         this.removeUser = this.removeUser.bind(this);
         this.addUser = this.addUser.bind(this);
         this.editUser = this.editUser.bind(this);
         this.saveUser = this.saveUser.bind(this);
+        this.showFormAddUser = this.showFormAddUser.bind(this);
     }
 
     componentDidMount() {
@@ -110,12 +112,26 @@ class MainPage extends Component {
             )
     }
 
+    showFormAddUser(some) {
+
+        this.setState({show: some})
+        //alert("from main" + this.state.show )
+    }
+
     render() {
         document.body.style.background = "linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)";
         return (
             <div align={"center"}>
-                <UserForm users={this.state.users} saveUser={this.saveUser} userAttr={this.state.user}/>
-                <UserList users={this.state.users} removeUser={this.removeUser} editUser={this.editUser}/>
+                <UserForm users={this.state.users}
+                          saveUser={this.saveUser}
+                          userAttr={this.state.user}
+                          show={this.state.show}
+                          showFormAddUser={this.showFormAddUser}/>
+                <UserList users={this.state.users}
+                          removeUser={this.removeUser}
+                          editUser={this.editUser}
+                          show={this.state.show}
+                          showFormAddUser={this.showFormAddUser}/>
             </div>
         )
     }
