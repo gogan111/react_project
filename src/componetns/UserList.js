@@ -11,6 +11,7 @@ class UserList extends Component {
         super(props);
         this.state={users:[]}
         this.removeUser = this.removeUser.bind(this);
+        this.editUser = this.editUser.bind(this);
     }
 
     removeUser(user) {

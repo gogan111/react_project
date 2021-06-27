@@ -14,7 +14,7 @@ class MainPage extends Component {
                 "age": '',
                 "email": ''
             },
-            show: false
+            show: true
         };
 
         this.removeUser = this.removeUser.bind(this);
@@ -25,7 +25,7 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        fetch("http://104.198.33.217:8085/project/rest/persons")
+        fetch("http://109.227.122.143:9000/rest/persons")
             .then(response => {
                     response.json()
                         .then(data => {
@@ -42,15 +42,15 @@ class MainPage extends Component {
         } else {
             this.updateUser(user)
         }
+
     }
 
     editUser(user) {
-        this.state.user.id = user.id
-        this.setState({user: user})
+        this.setState({user:user})
     }
 
     addUser(user) {
-        fetch("http://104.198.33.217:8085/project/rest/persons", {
+        fetch("http://109.227.122.143:9000/rest/persons", {
             body: JSON.stringify({user}),
             mode: "cors",
             method: "POST",
@@ -67,7 +67,7 @@ class MainPage extends Component {
                             }
                         )
                 } else {
-                    alert('not deleted')
+                    alert('not added')
                 }
             }
         );
@@ -75,13 +75,13 @@ class MainPage extends Component {
 
     updateUser(user) {
 
-        fetch("http://104.198.33.217:8085/project/rest/persons", {
+        fetch("http://109.227.122.143:9000/rest/persons", {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "POST",
         })
             .then(response => {
-                    alert("status " + response.status)
+                    alert("status from update" + response.status)
                     if (response.ok) {
                         const updateIndex = this.state.users.findIndex(item => item.id === user.id)
                         let updatedUsers = [...this.state.users.slice(0, updateIndex), user, ...this.state.users.slice(updateIndex + 1)]
@@ -95,7 +95,7 @@ class MainPage extends Component {
 
     removeUser(user) {
         alert("dell " + user.id)
-        fetch("http://104.198.33.217:8085/project/rest/persons", {
+        fetch("http://109.227.122.143:9000/rest/persons", {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "DELETE",
@@ -113,9 +113,7 @@ class MainPage extends Component {
     }
 
     showFormAddUser(some) {
-
         this.setState({show: some})
-        //alert("from main" + this.state.show )
     }
 
     render() {
