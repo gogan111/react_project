@@ -23,9 +23,8 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:9000/rest/persons")
+        fetch("http://109.227.122.143:9000/rest/persons")
             .then(response => {
-                    alert(response.status)
                     response.json()
                         .then(data => {
                                 this.setState({users: data})
@@ -112,7 +111,7 @@ class MainPage extends Component {
     }
 
     render() {
-        document.body.style.backgroundColor = "rgba(167,165,74,0.35)";
+        document.body.style.background = "linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)";
         return (
             <div align={"center"}>
                 <UserForm users={this.state.users} saveUser={this.saveUser} userAttr={this.state.user}/>

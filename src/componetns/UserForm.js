@@ -97,7 +97,8 @@ class UserForm extends React.Component {
                     validators={['required', 'isEmail']}
                     errorMessages={['this field is required', 'email is not valid']}
                 />
-                <Button type="submit">Submit</Button>
+                <br />
+                <Button type="submit" variant="contained" color="primary">Submit</Button>
             </ValidatorForm>
         );
     }
