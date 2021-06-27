@@ -60,7 +60,9 @@ class UserList extends Component {
                             </tr>
                             </thead>
                             <tbody>
+                            <br />
                             {userList}
+                            <br />
                             </tbody>
                         </Table>
                     </Typography>
