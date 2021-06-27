@@ -1,23 +1,23 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://localhost:8080/project/rest/persons";
+const USER_API_BASE_URL = "http://34.69.87.151:8085/project/rest/persons";
 
 class UserService {
 
-    getEmployees(){
+    getUsers(){
         return axios.get(USER_API_BASE_URL);
     }
 
-    createEmployee(employee){
-        return axios.post(USER_API_BASE_URL, employee);
+    createUser(user){
+        return axios.post(USER_API_BASE_URL, user);
     }
 
-    updateEmployee(employee, employeeId){
-        return axios.put(USER_API_BASE_URL + '/' + employeeId, employee);
+    updateUser(user, userId){
+        return axios.put(USER_API_BASE_URL + '/' + userId, user);
     }
 
-    deleteEmployee(employeeId){
-        return axios.delete(USER_API_BASE_URL + '/' + employeeId);
+    deleteUser(userId){
+        return axios.delete(USER_API_BASE_URL + '/' + userId);
     }
 }
 

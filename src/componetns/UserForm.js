@@ -17,7 +17,7 @@ class UserForm extends React.Component {
     }
 
     state = {
-        id: '',
+        id: 0,
         email: '',
         age: '',
         name: '',
@@ -50,7 +50,7 @@ class UserForm extends React.Component {
 
     clearForm() {
         this.setState({
-            id: '',
+            id: 0,
             name: '',
             surname: '',
             age: '',

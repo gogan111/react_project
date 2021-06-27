@@ -13,8 +13,8 @@ class UserList extends Component {
         this.removeUser = this.removeUser.bind(this);
     }
 
-    removeUser(id) {
-        this.props.removeUser(id);
+    removeUser(user) {
+        this.props.removeUser(user);
     }
     editUser(user) {
         this.props.editUser(user)
@@ -22,6 +22,7 @@ class UserList extends Component {
 
     render() {
         const users = this.props.users;
+        users.sort((a, b) => a.id - b.id);
 
         const userList = users.map(user => {
             return <tr key={user.id}>
@@ -36,7 +37,7 @@ class UserList extends Component {
                         <Button size="small" variant="contained" color="primary"
                                 onClick={() => this.editUser(user)} >Edit</Button>
                         <Button size="small" variant="contained" color="secondary"
-                                onClick={() => this.removeUser(user.id)}>Delete</Button>
+                                onClick={() => this.removeUser(user)}>Delete</Button>
                     </ButtonGroup>
                 </td>
             </tr>
