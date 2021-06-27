@@ -17,6 +17,7 @@ class UserList extends Component {
         this.props.removeUser(user);
     }
     editUser(user) {
+        this.props.showFormAddUser(true)
         this.props.editUser(user)
     }
 

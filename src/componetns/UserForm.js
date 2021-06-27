@@ -1,8 +1,34 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 class UserForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: '',
+            email: '',
+            age: '',
+            name: '',
+            surname: '',
+            show: true
+        };
+        this.showFormAddUser = this.showFormAddUser.bind(this);
+    }
+
+    showFormAddUser() {
+        //alert(this.state.show)
+        let opened = this.state.show
+        this.setState({
+            show: !opened,
+        })
+        this.props.showFormAddUser(!opened)
+        //this.props.show.setValue(this.state.show)
+    }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.userAttr !== prevProps.userAttr) {
@@ -14,6 +40,11 @@ class UserForm extends React.Component {
                 email: this.props.userAttr.email
             });
         }
+        if (this.props.show !== prevProps.show) {
+            this.setState({
+                show: this.props.show
+            });
+        }
     }
 
     state = {
@@ -21,7 +52,8 @@ class UserForm extends React.Component {
         email: '',
         age: '',
         name: '',
-        surname: ''
+        surname: '',
+        show: true
     }
 
     handleChangeEmail = (event) => {
@@ -54,52 +86,67 @@ class UserForm extends React.Component {
             name: '',
             surname: '',
             age: '',
-            email: ''
+            email: '',
+            show: false
         });
     }
 
     render() {
         return (
-            <ValidatorForm
-                ref="form"
-                onSubmit={this.handleSubmit}
-                onError={errors => console.log(errors)}
-            >
-                <TextValidator
-                    label="Name"
-                    onChange={this.handleChangeName}
-                    name="name"
-                    value={this.state.name}
-                    validators={['required', 'matchRegexp:^([A-Z][a-z]{2,15})$']}
-                    errorMessages={['this field is required', 'name is not valid']}
-                />
-                <TextValidator
-                    label="Surname"
-                    onChange={this.handleChangeSurname}
-                    name="surname"
-                    value={this.state.surname}
-                    validators={['required', 'matchRegexp:^([A-Z][a-z]{2,15})$']}
-                    errorMessages={['this field is required', 'surname is not valid']}
-                />
-                <TextValidator
-                    label="Age"
-                    onChange={this.handleChangeAge}
-                    name="age"
-                    value={this.state.age}
-                    validators={['required', 'minNumber:1', 'maxNumber:116', 'matchRegexp:^[1-9][0-9]?$']}
-                    errorMessages={['this field is required', 'email is not valid', 'some thing']}
-                />
-                <TextValidator
-                    label="Email"
-                    onChange={this.handleChangeEmail}
-                    name="email"
-                    value={this.state.email}
-                    validators={['required', 'isEmail']}
-                    errorMessages={['this field is required', 'email is not valid']}
-                />
-                <br />
-                <Button type="submit" variant="contained" color="primary">Submit</Button>
-            </ValidatorForm>
+            <div>
+                <div >
+                    <AppBar position="static">
+                        <Tabs  aria-label="simple tabs example">
+                            <Tab label="Add User" onClick={this.showFormAddUser}/>
+
+                        </Tabs>
+                    </AppBar>
+
+                </div>
+                <div style={{visibility: this.state.show ? 'visible' : 'hidden' }}>
+                    <ValidatorForm
+                        ref="form"
+                        onSubmit={this.handleSubmit}
+                        onError={errors => console.log(errors)}
+                    >
+                        <br />
+                        <TextValidator
+                            label="Name"
+                            onChange={this.handleChangeName}
+                            name="name"
+                            value={this.state.name}
+                            validators={['required', 'matchRegexp:^([A-Z][a-z]{2,15})$']}
+                            errorMessages={['this field is required', 'name is not valid']}
+                        />
+                        <TextValidator
+                            label="Surname"
+                            onChange={this.handleChangeSurname}
+                            name="surname"
+                            value={this.state.surname}
+                            validators={['required', 'matchRegexp:^([A-Z][a-z]{2,15})$']}
+                            errorMessages={['this field is required', 'surname is not valid']}
+                        />
+                        <TextValidator
+                            label="Age"
+                            onChange={this.handleChangeAge}
+                            name="age"
+                            value={this.state.age}
+                            validators={['required', 'minNumber:1', 'maxNumber:116', 'matchRegexp:^[1-9][0-9]?$']}
+                            errorMessages={['this field is required', 'email is not valid', 'some thing']}
+                        />
+                        <TextValidator
+                            label="Email"
+                            onChange={this.handleChangeEmail}
+                            name="email"
+                            value={this.state.email}
+                            validators={['required', 'isEmail']}
+                            errorMessages={['this field is required', 'email is not valid']}
+                        />
+                        <br />
+                        <Button type="submit" variant="contained" color="primary">Submit</Button>
+                    </ValidatorForm>
+                </div>
+            </div>
         );
     }
 }
