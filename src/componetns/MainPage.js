@@ -50,7 +50,7 @@ class MainPage extends Component {
     }
 
     addUser(user) {
-        fetch("http://localhost:9000/rest/persons", {
+        fetch("104.198.33.217:8085/project/rest/persons", {
             body: JSON.stringify({user}),
             mode: "cors",
             method: "POST",
@@ -75,7 +75,7 @@ class MainPage extends Component {
 
     updateUser(user) {
 
-        fetch("http://localhost:9000/rest/persons", {
+        fetch("104.198.33.217:8085/project/rest/persons", {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "POST",
@@ -95,7 +95,7 @@ class MainPage extends Component {
 
     removeUser(user) {
         alert("dell " + user.id)
-        fetch("http://localhost:9000/rest/persons", {
+        fetch("104.198.33.217:8085/project/rest/persons", {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "DELETE",
