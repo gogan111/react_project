@@ -3,6 +3,8 @@ import UserForm from "./UserForm";
 import UserList from "./UserList";
 
 class MainPage extends Component {
+    PATH = "http://34.132.134.103:8085/project/rest/persons"
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +27,7 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        fetch("http://109.227.122.143:9000/rest/persons")
+        fetch(this.PATH)
             .then(response => {
                     response.json()
                         .then(data => {
@@ -42,30 +44,38 @@ class MainPage extends Component {
         } else {
             this.updateUser(user)
         }
-
     }
 
     editUser(user) {
-        this.setState({user:user})
+        this.setState({user: user})
     }
 
     addUser(user) {
-        fetch("http://109.227.122.143:9000/rest/persons", {
+        fetch(this.PATH, {
             body: JSON.stringify({user}),
             mode: "cors",
             method: "POST",
         }).then(response => {
-                alert("status " + response.status)
                 if (response.ok) {
                     response.json()
                         .then(data => {
-                            let updatedUsers = [
-                                ...this.state.users,
-                                data
-                            ]
-                            this.setState({users: updatedUsers});
+                                let updatedUsers = [
+                                    ...this.state.users,
+                                    data
+                                ]
+                                this.setState({users: updatedUsers});
                             }
                         )
+                } else if (response.status === 400) {
+                    let newUser = user
+                    newUser.email = ''
+                    response.json()
+                        .then(data => {
+                                alert(data.error)
+                            }
+                        )
+                    this.editUser(newUser);
+                    this.showFormAddUser(true)
                 } else {
                     alert('not added')
                 }
@@ -75,33 +85,32 @@ class MainPage extends Component {
 
     updateUser(user) {
 
-        fetch("http://109.227.122.143:9000/rest/persons", {
+        fetch(this.PATH, {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "POST",
         })
             .then(response => {
-                    alert("status from update" + response.status)
                     if (response.ok) {
                         const updateIndex = this.state.users.findIndex(item => item.id === user.id)
                         let updatedUsers = [...this.state.users.slice(0, updateIndex), user, ...this.state.users.slice(updateIndex + 1)]
                         this.setState({users: updatedUsers});
                     } else {
-                        alert('not deleted')
+                        alert(
+                            'not deleted'
+                        )
                     }
                 }
             )
     }
 
     removeUser(user) {
-        alert("dell " + user.id)
-        fetch("http://109.227.122.143:9000/rest/persons", {
+        fetch(this.PATH, {
             mode: "cors",
             body: JSON.stringify({user}),
             method: "DELETE",
         })
             .then(response => {
-                    alert(response.status)
                     if (response.ok) {
                         let updatedUsers = [...this.state.users].filter(i => i.id !== user.id);
                         this.setState({users: updatedUsers});
@@ -121,14 +130,14 @@ class MainPage extends Component {
         return (
             <div align={"center"}>
                 <UserForm users={this.state.users}
-                          saveUser={this.saveUser}
                           userAttr={this.state.user}
                           show={this.state.show}
+                          saveUser={this.saveUser}
                           showFormAddUser={this.showFormAddUser}/>
                 <UserList users={this.state.users}
-                          removeUser={this.removeUser}
-                          editUser={this.editUser}
                           show={this.state.show}
+                          editUser={this.editUser}
+                          removeUser={this.removeUser}
                           showFormAddUser={this.showFormAddUser}/>
             </div>
         )

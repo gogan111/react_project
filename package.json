@@ -4,12 +4,9 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.2",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -18,8 +15,6 @@
     "react-form-with-constraints-tools": "^0.18.0",
     "react-material-ui-form-validator": "^2.1.4",
     "react-scripts": "4.0.3",
-    "reactstrap": "^8.9.0",
-    "validator": "^13.6.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -45,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.0.0"
   }
 }

@@ -25,10 +25,12 @@ class UserList extends Component {
     render() {
         const users = this.props.users;
         users.sort((a, b) => a.id - b.id);
+        let index = 0;
 
         const userList = users.map(user => {
             return <tr key={user.id}>
-                <td align={'center'}>{user.id}</td>
+
+                <td align={'center'}>{++index}</td>
                 <td align={'center'}>{user.name}</td>
                 <td align={'center'}>{user.surname}</td>
                 <td align={'center'}>{user.age}</td>
@@ -53,7 +55,7 @@ class UserList extends Component {
                         <Table >
                             <thead>
                             <tr style={{backgroundColor: 'rgba(89,141,246,0.41)'}}>
-                                <th align={'center'} width="5%">ID</th>
+                                <th align={'center'} width="5%">№</th>
                                 <th align={'center'} width="20%">Name</th>
                                 <th align={'center'} width="20%">Surname</th>
                                 <th align={'center'} width="10%">Age</th>

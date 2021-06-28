@@ -28,14 +28,11 @@ class UserForm extends React.Component {
     }
 
     showFormAddUser() {
-        //alert(this.state.show)
         let opened = this.state.show
         this.setState({
             show: !opened,
         })
-        alert("from userform " + this.state.show)
         this.props.showFormAddUser(!opened)
-        //this.props.show.setValue(this.state.show)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -53,11 +50,8 @@ class UserForm extends React.Component {
             this.setState({
                 show: this.props.show
             });
-
         }
     }
-
-
 
     handleChangeEmail = (event) => {
         const email = event.target.value;
@@ -96,17 +90,14 @@ class UserForm extends React.Component {
 
     render() {
         return (
-
             <div>
                 <div >
 
                     <AppBar position="static">
                         <Tabs value={1} aria-label="simple tabs example" >
                             <Tab value={1} label="Add User" onClick={this.showFormAddUser}/>
-
                         </Tabs>
                     </AppBar>
-
                 </div>
                 <div style={{visibility: this.state.show ? 'visible' : 'hidden' }}>
                     <ValidatorForm
@@ -137,7 +128,7 @@ class UserForm extends React.Component {
                             name="age"
                             value={this.state.age}
                             validators={['required', 'minNumber:1', 'maxNumber:116', 'matchRegexp:^[1-9][0-9]?$']}
-                            errorMessages={['this field is required', 'email is not valid', 'some thing']}
+                            errorMessages={['this field is required', 'invalid age', 'invalid age', 'invalid age']}
                         />
                         <TextValidator
                             label="Email"
