@@ -24,7 +24,6 @@ class UserForm extends React.Component {
         this.handleChangeSurname = this.handleChangeSurname.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.clearForm = this.clearForm.bind(this);
-
     }
 
     showFormAddUser() {
@@ -46,7 +45,6 @@ class UserForm extends React.Component {
             });
         }
         if (this.props.show !== prevProps.show) {
-
             this.setState({
                 show: this.props.show
             });
