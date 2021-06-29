@@ -3,7 +3,7 @@ import UserForm from "./UserForm";
 import UserList from "./UserList";
 
 class MainPage extends Component {
-    PATH = "http://34.132.134.103:8085/project/rest/persons"
+    PATH = "http://34.132.2.213:8085/project/rest/persons"
 
     constructor(props) {
         super(props);
