@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import UserForm from "./UserForm";
 import UserList from "./UserList";
+import UserService from "../UserService";
 
 class MainPage extends Component {
-    PATH = "http://34.132.2.213:8085/project/rest/persons"
 
     constructor(props) {
         super(props);
@@ -27,15 +27,14 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        fetch(this.PATH)
+        UserService.getUsers()
             .then(response => {
-                    response.json()
-                        .then(data => {
-                                this.setState({users: data})
-                            }
-                        )
+                    this.setState({users: response.data})
                 }
             )
+            .catch(error => {
+                alert(error)
+            })
     }
 
     saveUser(user) {
@@ -51,74 +50,51 @@ class MainPage extends Component {
     }
 
     addUser(user) {
-        fetch(this.PATH, {
-            body: JSON.stringify({user}),
-            mode: "cors",
-            method: "POST",
-        }).then(response => {
-                if (response.ok) {
-                    response.json()
-                        .then(data => {
-                                let updatedUsers = [
-                                    ...this.state.users,
-                                    data
-                                ]
-                                this.setState({users: updatedUsers});
-                            }
-                        )
-                } else if (response.status === 400) {
-                    let newUser = user
-                    newUser.email = ''
-                    response.json()
-                        .then(data => {
-                                alert(data.error)
-                            }
-                        )
-                    this.editUser(newUser);
-                    this.showFormAddUser(true)
-                } else {
-                    alert('not added')
+        UserService.createUser(user)
+            .then(response => {
+                    if (response.status === 200) {
+                        let updatedUsers = [
+                            ...this.state.users,
+                            response.data
+                        ]
+                        this.setState({users: updatedUsers});
+                    }
                 }
-            }
-        );
+            )
+            .catch(error => {
+                alert(error)
+            });
     }
 
     updateUser(user) {
-
-        fetch(this.PATH, {
-            mode: "cors",
-            body: JSON.stringify({user}),
-            method: "POST",
-        })
+        UserService.updateUser(user)
             .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         const updateIndex = this.state.users.findIndex(item => item.id === user.id)
                         let updatedUsers = [...this.state.users.slice(0, updateIndex), user, ...this.state.users.slice(updateIndex + 1)]
                         this.setState({users: updatedUsers});
                     } else {
-                        alert(
-                            'not deleted'
-                        )
+                        alert(response.data.error)
                     }
                 }
             )
+            .catch(error => {
+                alert(error)
+            });
     }
 
     removeUser(user) {
-        fetch(this.PATH, {
-            mode: "cors",
-            body: JSON.stringify({user}),
-            method: "DELETE",
-        })
+        UserService.delete(user.id)
             .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         let updatedUsers = [...this.state.users].filter(i => i.id !== user.id);
                         this.setState({users: updatedUsers});
-                    } else {
-                        alert("not deleted")
                     }
                 }
             )
+            .catch(error => {
+                alert(error)
+            });
     }
 
     showFormAddUser(some) {
