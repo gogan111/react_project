@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PATH = "http://109.227.122.143:8080/users";
+const PATH = "http://localhost:8585/project/users";
 
 class UserService {
 
